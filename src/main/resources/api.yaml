@@ -1,0 +1,407 @@
+openapi: 3.0.3
+info:
+  title: Swagger User Management - OpenAPI 3.0
+  description: |-
+    This is a sample Player Store Server based on the OpenAPI 3.0 specification.  You can find out more about
+    Swagger at [https://swagger.io](https://swagger.io). In the third iteration of the Player store, we've switched to the design first approach!
+    You can now help us improve the API whether it's by making changes to the definition itself or to the code.
+    That way, with time, we can improve the API in general, and expose some of the new features in OAS3.
+
+    _If you're looking for the Swagger 2.0/OAS 2.0 version of user management, then click [here](https://editor.swagger.io/?url=https://Playerstore.swagger.io/v2/swagger.yaml). Alternatively, you can load via the `Edit > Load Playerstore OAS 2.0` menu option!_
+    
+    Some useful links:
+    - [The Player Store repository](https://github.com/swagger-api/swagger-Playerstore)
+    - [The source API definition for the Player Store](https://github.com/swagger-api/swagger-Playerstore/blob/master/src/main/resources/openapi.yaml)
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: raju1894u@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: http://localhost:8080/api
+tags:
+  - name: player
+    description: Everything about the Players
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io
+  - name: country
+    description: Everything about the country
+    externalDocs:
+      description: Find out more about our country
+      url: http://swagger.io
+paths:
+  /player/updatePlayer:
+    put:
+      tags:
+        - player
+      summary: Update an existing player
+      description: Update an existing player by Id
+      operationId: add
+      requestBody:
+        description: Update an existent Player in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Player'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Player'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Player'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Player'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Player'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Player not found
+        '422':
+          description: Validation exception
+      security:
+        - Playerstore_auth:
+            - write:Players
+            - read:Players
+
+  /player/addPlayer:
+    post:
+      tags:
+        - player
+      summary: Add a new Player to the store
+      description: Add a new Player to the store
+      operationId: addPlayer
+      requestBody:
+        description: Create a new Player in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Player'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Player'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Player'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Player'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Player'
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+      security:
+        - Playerstore_auth:
+            - write:Players
+            - read:Players
+
+  /player/{playerId}:
+    get:
+      tags:
+        - player
+      summary: Find Player by ID
+      description: Returns a single Player
+      operationId: getPlayerById
+      parameters:
+        - name: playerId
+          in: path
+          description: ID of Player to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Player'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Player'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Player not found
+      security:
+        - api_key: []
+        - Playerstore_auth:
+            - write:Players
+            - read:Players
+
+    delete:
+      tags:
+        - player
+      summary: Deletes a Player
+      description: delete a Player
+      operationId: deletePlayer
+      parameters:
+        - name: api_key
+          in: header
+          description: ''
+          required: false
+          schema:
+            type: string
+        - name: playerId
+          in: path
+          description: Player id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: Invalid Player value
+      security:
+        - Playerstore_auth:
+            - write:Players
+            - read:Players
+
+  /country/updateCountry:
+    put:
+      tags:
+        - country
+      summary: Update an existing country
+      description: Update an existing country by Id
+      operationId: updateCountry
+      requestBody:
+        description: Update an existent country in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Country'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Country'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Country'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Country'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Country'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Country not found
+        '422':
+          description: Validation exception
+      security:
+        - Playerstore_auth:
+            - write:Countrys
+            - read:Countrys
+
+  /country/addCountry:
+    post:
+      tags:
+        - country
+      summary: Add a new country to the store
+      description: Add a new country to the store
+      operationId: addCountry
+      requestBody:
+        description: Create a new Country in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Country'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Country'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Country'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Country'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Country'
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+
+
+  /country/{countryId}:
+    get:
+      tags:
+        - country
+      summary: Find Player by ID
+      description: Returns a single Player
+      operationId: getCountryById
+      parameters:
+        - name: countryId
+          in: path
+          description: ID of Country to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Country'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Country'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Country not found
+
+
+    delete:
+      tags:
+        - country
+      summary: Deletes a Country
+      description: delete a Country
+      operationId: deleteCountry
+      parameters:
+        - name: api_key
+          in: header
+          description: ''
+          required: false
+          schema:
+            type: string
+        - name: countryId
+          in: path
+          description: country id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: Invalid Player value
+
+components:
+  schemas:
+    Country:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        name:
+          type: string
+          example: 198772
+        code:
+          type: string
+          example: 'IND'
+    Address:
+      type: object
+      properties:
+        street:
+          type: string
+          example: 437 Lytton
+        city:
+          type: string
+          example: Palo Alto
+        state:
+          type: string
+          example: CA
+        zip:
+          type: string
+          example: '94301'
+    Player:
+      required:
+        - fullName
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        fullName:
+          type: string
+          example: doggie
+        status:
+          type: string
+          description: Player status in the store
+          enum:
+            - ACTIVE
+            - INACTIVE
+        country:
+          $ref: '#/components/schemas/Country'
+
+    ApiResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        type:
+          type: string
+        message:
+          type: string
+      xml:
+        name: '##default'
+  requestBodies:
+    Player:
+      description: Player object that needs to be added to the store
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Player'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Player'
+    CountryArray:
+      description: List of country object
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Country'
+  securitySchemes:
+    Playerstore_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://Playerstore3.swagger.io/oauth/authorize
+          scopes:
+            write:Players: modify Players in your account
+            read:Players: read your Players
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header
